@@ -21,7 +21,45 @@ mongoose
   })
   .then(() => {
     // Run your code here, after you have insured that the connection was made
+    let myRecipe = {
+      title: "Anna's Pie",
+      level: "Easy Peasy",
+      ingredients: ["Flour", "Hazelnut", "Oatmilk", "Cinnamon"],
+      cuisine: "German"
+    }
+    //ITERATION 2
+    return Recipe.create(myRecipe)
   })
+  .then((createdRecipe) => {
+      console.log('all good!', createdRecipe.title)
+    //ITERATION 3
+    return Recipe.insertMany(data)
+  })
+  .then((allRecipes) => {
+    //console.log('all recipes', allRecipes)
+    for (let i = 0; i < allRecipes.length; i++){
+      console.log(allRecipes[i].title)
+    }
+    //ITERATION 4
+    return Recipe.findOneAndUpdate({name: 'Rigatoni alla Genovese'}, {duration: 100})
+  })
+  .then(() =>{
+     console.log('good job, you updated!')
+    //ITERATION 5
+    return Recipe.deleteOne({name: 'Carrot Cake'})
+  })
+  .then(() =>{
+     console.log('deleted')  
+    //ITERATION 6
+    return mongoose.connection.close()
+   .then(() => {
+     console.log('disconnected')
+   })
+   .catch(error => {
+     console.log('disconnection failed')
+   })
+  })
+   
   .catch(error => {
-    console.error('Error connecting to the database', error);
+      console.error('Error connecting to the database', error);
   });
